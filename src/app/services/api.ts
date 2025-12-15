@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -7,10 +7,16 @@ export class ApiService {
 
   private baseUrl = environment.apiUrl;
 
+  private jsonHeaders = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
   constructor(private http: HttpClient) {}
 
   /* ========================================================
-      UNIVERSAL GET METHOD (FIX ERROR MERAH)
+      UNIVERSAL GET
      ======================================================== */
   get(endpoint: string) {
     return this.http.get(`${this.baseUrl}/api/${endpoint}`);
@@ -19,14 +25,23 @@ export class ApiService {
   /* ========================================================
       AUTH
      ======================================================== */
+
+  // ✅ LOGIN (SUDAH BENAR)
   login(data: any) {
-    return this.http.post(`${this.baseUrl}/api/users/login`, data);
+    return this.http.post(
+      `${this.baseUrl}/api/users/login`,
+      data,
+      this.jsonHeaders
+    );
   }
 
-
-  // REGISTER
+  // ✅ REGISTER (FIXED)
   register(data: any) {
-    return this.http.post(`${this.baseUrl}/api/users/register`, data);
+    return this.http.post(
+      `${this.baseUrl}/api/users`,
+      data,
+      this.jsonHeaders
+    );
   }
 
   /* ========================================================
@@ -41,21 +56,19 @@ export class ApiService {
   }
 
   addAsset(data: any) {
-    return this.http.post(`${this.baseUrl}/api/assets`, data);
+    return this.http.post(`${this.baseUrl}/api/assets`, data, this.jsonHeaders);
   }
 
-  /**
-   * Alias for creating an asset to match method names used across pages
-   */
   createAsset(data: any) {
     return this.addAsset(data);
   }
 
   updateAsset(id: number, data: any) {
-    return this.http.put(`${this.baseUrl}/api/assets/${id}`, {
-      ...data,
-      updated_by: 1
-    });
+    return this.http.put(
+      `${this.baseUrl}/api/assets/${id}`,
+      { ...data, updated_by: 1 },
+      this.jsonHeaders
+    );
   }
 
   deleteAsset(id: number) {
@@ -69,26 +82,16 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}/api/companies`);
   }
 
-  getCompanyById(id: number) {
-    return this.http.get(`${this.baseUrl}/api/companies/${id}`);
-  }
-
   addCompany(data: any) {
-    return this.http.post(`${this.baseUrl}/api/companies`, data);
-  }
-
-  /**
-   * Alias for creating a company to match method names used across pages
-   */
-  createCompany(data: any) {
-    return this.addCompany(data);
+    return this.http.post(`${this.baseUrl}/api/companies`, data, this.jsonHeaders);
   }
 
   updateCompany(id: number, data: any) {
-    return this.http.put(`${this.baseUrl}/api/companies/${id}`, {
-      ...data,
-      updated_by: 1
-    });
+    return this.http.put(
+      `${this.baseUrl}/api/companies/${id}`,
+      { ...data, updated_by: 1 },
+      this.jsonHeaders
+    );
   }
 
   deleteCompany(id: number) {
@@ -102,26 +105,16 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}/api/factories`);
   }
 
-  getFactoryById(id: number) {
-    return this.http.get(`${this.baseUrl}/api/factories/${id}`);
-  }
-
   addFactory(data: any) {
-    return this.http.post(`${this.baseUrl}/api/factories`, data);
-  }
-
-  /**
-   * Alias for creating a factory
-   */
-  createFactory(data: any) {
-    return this.addFactory(data);
+    return this.http.post(`${this.baseUrl}/api/factories`, data, this.jsonHeaders);
   }
 
   updateFactory(id: number, data: any) {
-    return this.http.put(`${this.baseUrl}/api/factories/${id}`, {
-      ...data,
-      updated_by: 1
-    });
+    return this.http.put(
+      `${this.baseUrl}/api/factories/${id}`,
+      { ...data, updated_by: 1 },
+      this.jsonHeaders
+    );
   }
 
   deleteFactory(id: number) {
@@ -135,23 +128,16 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}/api/departments`);
   }
 
-  getDepartmentById(id: number) {
-    return this.http.get(`${this.baseUrl}/api/departments/${id}`);
-  }
-
   addDepartment(data: any) {
-    return this.http.post(`${this.baseUrl}/api/departments`, data);
-  }
-
-  createDepartment(data: any) {
-    return this.addDepartment(data);
+    return this.http.post(`${this.baseUrl}/api/departments`, data, this.jsonHeaders);
   }
 
   updateDepartment(id: number, data: any) {
-    return this.http.put(`${this.baseUrl}/api/departments/${id}`, {
-      ...data,
-      updated_by: 1
-    });
+    return this.http.put(
+      `${this.baseUrl}/api/departments/${id}`,
+      { ...data, updated_by: 1 },
+      this.jsonHeaders
+    );
   }
 
   deleteDepartment(id: number) {
@@ -165,23 +151,16 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}/api/locations`);
   }
 
-  getLocationById(id: number) {
-    return this.http.get(`${this.baseUrl}/api/locations/${id}`);
-  }
-
   addLocation(data: any) {
-    return this.http.post(`${this.baseUrl}/api/locations`, data);
-  }
-
-  createLocation(data: any) {
-    return this.addLocation(data);
+    return this.http.post(`${this.baseUrl}/api/locations`, data, this.jsonHeaders);
   }
 
   updateLocation(id: number, data: any) {
-    return this.http.put(`${this.baseUrl}/api/locations/${id}`, {
-      ...data,
-      updated_by: 1
-    });
+    return this.http.put(
+      `${this.baseUrl}/api/locations/${id}`,
+      { ...data, updated_by: 1 },
+      this.jsonHeaders
+    );
   }
 
   deleteLocation(id: number) {
@@ -195,93 +174,104 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}/api/asset_categories`);
   }
 
-  getCategoryById(id: number) {
-    return this.http.get(`${this.baseUrl}/api/asset_categories/${id}`);
-  }
-
   addCategory(data: any) {
-    return this.http.post(`${this.baseUrl}/api/asset_categories`, data);
-  }
-
-  createCategory(data: any) {
-    return this.addCategory(data);
+    return this.http.post(`${this.baseUrl}/api/asset_categories`, data, this.jsonHeaders);
   }
 
   updateCategory(id: number, data: any) {
-    return this.http.put(`${this.baseUrl}/api/asset_categories/${id}`, {
-      ...data,
-      updated_by: 1
-    });
+    return this.http.put(
+      `${this.baseUrl}/api/asset_categories/${id}`,
+      { ...data, updated_by: 1 },
+      this.jsonHeaders
+    );
   }
 
   deleteCategory(id: number) {
     return this.http.delete(`${this.baseUrl}/api/asset_categories/${id}`);
   }
 
-  /* ========================================================
-      ASSET ACTIVITY LOG
-     ======================================================== */
-  
-  /**
-   * Get all asset activity logs
-   */
-  getAssetLogs() {
-    return this.http.get(`${this.baseUrl}/api/asset_activity_log`);
-  }
+ /* ========================================================
+    ASSET ACTIVITY LOG
+   ======================================================== */
 
-  /**
-   * Get asset activity logs by asset ID
-   */
-  getAssetLogsByAssetId(assetId: number) {
-    return this.http.get(`${this.baseUrl}/api/asset_activity_log/asset/${assetId}`);
-  }
+// ==========================
+// GET semua asset activity log
+// ==========================
+getAssetLogs() {
+  return this.http.get(
+    `${this.baseUrl}/api/asset_activity_log`
+  );
+}
 
-  /**
-   * Get single asset activity log by ID
-   */
-  getAssetLogById(id: number) {
-    return this.http.get(`${this.baseUrl}/api/asset_activity_log/${id}`);
-  }
+// ==========================
+// GET asset activity log by ID
+// ==========================
+getAssetLogById(id: number) {
+  return this.http.get(
+    `${this.baseUrl}/api/asset_activity_log/${id}`
+  );
+}
 
-  /**
-   * Create new asset activity log
-   */
-  addAssetLog(data: any) {
-    return this.http.post(`${this.baseUrl}/api/asset_activity_log`, data);
-  }
+// ==========================
+// GET asset activity log by Asset ID
+// ==========================
+getAssetLogsByAssetId(assetId: number) {
+  return this.http.get(
+    `${this.baseUrl}/api/asset_activity_log/asset/${assetId}`
+  );
+}
 
-  /**
-   * Alias for creating asset log
-   */
-  createAssetLog(data: any) {
-    return this.addAssetLog(data);
-  }
+// ==========================
+// CREATE asset activity log
+// ==========================
+addAssetLog(data: any) {
+  return this.http.post(
+    `${this.baseUrl}/api/asset_activity_log`,
+    data,
+    this.jsonHeaders
+  );
+}
 
-  /**
-   * Update asset activity log
-   */
-  updateAssetLog(id: number, data: any) {
-    return this.http.put(`${this.baseUrl}/api/asset_activity_log/${id}`, {
+// 🔥 ALIAS (yang kamu panggil di page)
+createAssetLog(data: any) {
+  return this.addAssetLog(data);
+}
+
+// ==========================
+// UPDATE asset activity log
+// ==========================
+updateAssetLog(id: number, data: any) {
+  return this.http.put(
+    `${this.baseUrl}/api/asset_activity_log/${id}`,
+    {
       ...data,
       updated_by: 1
-    });
-  }
+    },
+    this.jsonHeaders
+  );
+}
 
-  /**
-   * Delete asset activity log (soft delete)
-   */
-  deleteAssetLog(id: number, deletedBy?: number) {
-    return this.http.delete(`${this.baseUrl}/api/asset_activity_log/${id}`, {
-      body: { deleted_by: deletedBy || 1 }
-    });
-  }
+// ==========================
+// DELETE asset activity log (SOFT DELETE)
+// ==========================
+deleteAssetLog(id: number, deletedBy: number = 1) {
+  return this.http.delete(
+    `${this.baseUrl}/api/asset_activity_log/${id}`,
+    {
+      body: {
+        deleted_by: deletedBy
+      }
+    }
+  );
+}
 
-  /**
-   * Get asset activity log statistics
-   */
-  getAssetLogStats() {
-    return this.http.get(`${this.baseUrl}/api/asset_activity_log/stats/summary`);
-
-  }
+// ==========================
+// GET statistik asset activity log
+// ==========================
+getAssetLogStats() {
+  return this.http.get(
+    `${this.baseUrl}/api/asset_activity_log/stats/summary`
+  );
+}
 
 }

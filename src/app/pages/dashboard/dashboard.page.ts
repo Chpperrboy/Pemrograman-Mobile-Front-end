@@ -13,6 +13,8 @@ import { ApiService } from '../../services/api';
 })
 export class DashboardPage implements OnInit {
 
+  sidebarVisible = false;
+
   totalAssets = 0;
   totalCompanies = 0;
   totalFactories = 0;
@@ -56,6 +58,14 @@ export class DashboardPage implements OnInit {
     this.api.getCategories().subscribe((res: any) => {
       this.totalCategories = res.data ? res.data.length : res.length;
     });
+  }
+
+  toggleSidebar() {
+    this.sidebarVisible = !this.sidebarVisible;
+  }
+
+  closeSidebar() {
+    this.sidebarVisible = false;
   }
 
   logout() {

@@ -1,3 +1,6 @@
+/* ============================================
+   RESET & GLOBALS
+=============================================== */
 ion-content {
   --background: transparent;
 }
@@ -20,6 +23,23 @@ ion-content {
 }
 
 /* ============================================
+   HAMBURGER BUTTON
+=============================================== */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1001;
+  background: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-size: 24px;
+}
+
+/* ============================================
    SIDEBAR
 =============================================== */
 .sidebar {
@@ -32,6 +52,12 @@ ion-content {
   flex-direction: column;
   box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
   z-index: 10;
+  transition: left 0.3s ease;
+  left: -100%;
+}
+
+.sidebar.active {
+  left: 0;
 }
 
 .sidebar-overlay {
@@ -129,15 +155,15 @@ ion-content {
   font-weight: 500;
   color: #cbd5e1;
   transition: all 0.25s ease;
-  
-  ion-icon {
-    font-size: 20px;
-    flex-shrink: 0;
-  }
-  
-  span {
-    flex: 1;
-  }
+}
+
+.menu-item ion-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.menu-item span {
+  flex: 1;
 }
 
 .menu-item:hover {
@@ -302,10 +328,10 @@ ion-content {
   font-size: 13px;
   font-weight: 600;
   color: #22c55e;
-  
-  ion-icon {
-    font-size: 16px;
-  }
+}
+
+.card-trend ion-icon {
+  font-size: 16px;
 }
 
 .card-icon {
@@ -318,11 +344,11 @@ ion-content {
   flex-shrink: 0;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease;
-  
-  ion-icon {
-    font-size: 32px;
-    color: white;
-  }
+}
+
+.card-icon ion-icon {
+  font-size: 32px;
+  color: white;
 }
 
 .stat-card:hover .card-icon {
@@ -332,94 +358,70 @@ ion-content {
 /* ============================================
    WARNA STAT CARD
 =============================================== */
-.blue {
-  .card-label,
-  .card-value {
-    color: #1e40af;
-  }
-  
-  .card-overlay {
-    background: linear-gradient(135deg, #3b82f6, #1e40af);
-  }
-  
-  .card-icon {
-    background: linear-gradient(135deg, #3b82f6, #1e40af);
-  }
+.blue .card-label,
+.blue .card-value {
+  color: #1e40af;
+}
+.blue .card-overlay {
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+}
+.blue .card-icon {
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
 }
 
-.green {
-  .card-label,
-  .card-value {
-    color: #15803d;
-  }
-  
-  .card-overlay {
-    background: linear-gradient(135deg, #22c55e, #15803d);
-  }
-  
-  .card-icon {
-    background: linear-gradient(135deg, #22c55e, #15803d);
-  }
+.green .card-label,
+.green .card-value {
+  color: #15803d;
+}
+.green .card-overlay {
+  background: linear-gradient(135deg, #22c55e, #15803d);
+}
+.green .card-icon {
+  background: linear-gradient(135deg, #22c55e, #15803d);
 }
 
-.orange {
-  .card-label,
-  .card-value {
-    color: #c2410c;
-  }
-  
-  .card-overlay {
-    background: linear-gradient(135deg, #fb923c, #c2410c);
-  }
-  
-  .card-icon {
-    background: linear-gradient(135deg, #fb923c, #c2410c);
-  }
+.orange .card-label,
+.orange .card-value {
+  color: #c2410c;
+}
+.orange .card-overlay {
+  background: linear-gradient(135deg, #fb923c, #c2410c);
+}
+.orange .card-icon {
+  background: linear-gradient(135deg, #fb923c, #c2410c);
 }
 
-.red {
-  .card-label,
-  .card-value {
-    color: #991b1b;
-  }
-  
-  .card-overlay {
-    background: linear-gradient(135deg, #ef4444, #991b1b);
-  }
-  
-  .card-icon {
-    background: linear-gradient(135deg, #ef4444, #991b1b);
-  }
+.red .card-label,
+.red .card-value {
+  color: #991b1b;
+}
+.red .card-overlay {
+  background: linear-gradient(135deg, #ef4444, #991b1b);
+}
+.red .card-icon {
+  background: linear-gradient(135deg, #ef4444, #991b1b);
 }
 
-.purple {
-  .card-label,
-  .card-value {
-    color: #4c1d95;
-  }
-  
-  .card-overlay {
-    background: linear-gradient(135deg, #8b5cf6, #4c1d95);
-  }
-  
-  .card-icon {
-    background: linear-gradient(135deg, #8b5cf6, #4c1d95);
-  }
+.purple .card-label,
+.purple .card-value {
+  color: #4c1d95;
+}
+.purple .card-overlay {
+  background: linear-gradient(135deg, #8b5cf6, #4c1d95);
+}
+.purple .card-icon {
+  background: linear-gradient(135deg, #8b5cf6, #4c1d95);
 }
 
-.yellow {
-  .card-label,
-  .card-value {
-    color: #a16207;
-  }
-  
-  .card-overlay {
-    background: linear-gradient(135deg, #eab308, #a16207);
-  }
-  
-  .card-icon {
-    background: linear-gradient(135deg, #eab308, #a16207);
-  }
+.yellow .card-label,
+.yellow .card-value {
+  color: #a16207;
+}
+.yellow .card-overlay {
+  background: linear-gradient(135deg, #eab308, #a16207);
+}
+.yellow .card-icon {
+  background: linear-gradient(135deg, #eab308, #a16207);
 }
 
 /* ============================================
@@ -499,11 +501,11 @@ ion-content {
   height: 48px;
   border-radius: 12px;
   flex-shrink: 0;
-  
-  ion-icon {
-    font-size: 24px;
-    color: white;
-  }
+}
+
+.activity-icon ion-icon {
+  font-size: 24px;
+  color: white;
 }
 
 .activity-icon.create {
@@ -541,26 +543,75 @@ ion-content {
 }
 
 @media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
   .layout-wrapper {
     flex-direction: column;
   }
-  
+
   .sidebar {
     width: 100%;
-    padding: 16px;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    z-index: 1000;
+    height: 100vh;
+    overflow-y: auto;
   }
-  
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  .sidebar-overlay {
+    display: none;
+  }
+
+  .main {
+    padding: 20px 16px;
+    margin-top: 60px;
+  }
+
   .stat-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
-  
-  .main {
-    padding: 20px;
+
+  .stat-card {
+    padding: 20px 16px;
   }
-  
+
+  .card-value {
+    font-size: 36px;
+  }
+
+  .page-header {
+    margin-bottom: 24px;
+  }
+
+  .page-header h2 {
+    font-size: 28px;
+  }
+
   .panel-header {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .view-all-btn {
+    align-self: flex-end;
+  }
+
+  .logo-wrapper {
+    width: 48px;
+    height: 48px;
+  }
+
+  .profile img {
+    width: 36px;
+    height: 36px;
   }
 }
