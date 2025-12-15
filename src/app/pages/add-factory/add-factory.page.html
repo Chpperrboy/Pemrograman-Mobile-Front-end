@@ -1,0 +1,99 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen [scrollY]="true">
+
+  <!-- Header Section -->
+  <div class="page-header">
+    <div class="header-icon">🏭</div>
+    <h1 class="header-title">{{ id ? 'Edit Factory' : 'Tambah Factory Baru' }}</h1>
+    <p class="header-subtitle">Lengkapi informasi factory dengan detail yang akurat</p>
+  </div>
+
+  <!-- Form Container -->
+  <div class="form-container">
+
+    <!-- Section: Informasi Dasar -->
+    <div class="section-title">Informasi Dasar</div>
+
+    <!-- Company ID -->
+    <div class="form-group">
+      <label class="form-label">Company ID <span class="required">*</span></label>
+      <input
+        type="number"
+        class="form-input"
+        [class.invalid]="submitted && !factory.company_id"
+        [(ngModel)]="factory.company_id"
+        placeholder="Contoh: 1"
+        min="1"
+        [readonly]="id ? true : false"
+      />
+      <span *ngIf="submitted && !factory.company_id" class="help-text">Company ID wajib diisi.</span>
+    </div>
+
+    <!-- Nama Factory -->
+    <div class="form-group">
+      <label class="form-label">Nama Factory <span class="required">*</span></label>
+      <input
+        type="text"
+        class="form-input"
+        [class.invalid]="submitted && !factory.name"
+        [(ngModel)]="factory.name"
+        placeholder="Contoh: Pabrik Jakarta Utara"
+      />
+      <span *ngIf="submitted && !factory.name" class="help-text">Nama factory wajib diisi.</span>
+    </div>
+
+    <!-- Alamat -->
+    <div class="form-group">
+      <label class="form-label">Alamat</label>
+      <textarea
+        class="form-input"
+        rows="3"
+        [(ngModel)]="factory.address"
+        placeholder="Contoh: Jl. Industri No. 5, Bekasi"
+      ></textarea>
+    </div>
+
+    <!-- No Telepon -->
+    <div class="form-group">
+      <label class="form-label">No Telepon <span class="required">*</span></label>
+      <input
+        type="tel"
+        class="form-input"
+        [class.invalid]="submitted && !factory.phone"
+        [(ngModel)]="factory.phone"
+        placeholder="Contoh: 081234567890"
+      />
+      <span *ngIf="submitted && !factory.phone" class="help-text">Nomor telepon wajib diisi.</span>
+    </div>
+
+    <!-- Tombol Simpan -->
+    <div class="button-group">
+      <button
+        class="btn btn-primary"
+        (click)="save()"
+        [disabled]="saving"
+      >
+        <ion-spinner *ngIf="saving" name="crescent"></ion-spinner>
+        <span *ngIf="!saving">{{ id ? 'Update Factory' : 'Simpan Factory' }}</span>
+      </button>
+
+      <button
+        class="btn btn-secondary"
+        (click)="goBack()"
+      >
+        Batal
+      </button>
+    </div>
+
+  </div>
+
+</ion-content>

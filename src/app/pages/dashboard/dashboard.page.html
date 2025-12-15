@@ -1,0 +1,229 @@
+<ion-content>
+  <div class="layout-wrapper">
+
+    <!-- ========== SIDEBAR ========== -->
+    <div class="sidebar">
+      <div class="sidebar-overlay"></div>
+
+      <!-- PROFILE -->
+      <div class="profile">
+        <div class="logo-wrapper">
+          <img src="assets/logoAsset.jpeg" class="logo-img" />
+        </div>
+        <h4>Asset System</h4>
+        <div class="status-container">
+          <div class="status-dot"></div>
+          <p class="status-online">Online</p>
+        </div>
+      </div>
+
+      <!-- MENU -->
+      <nav class="menu-nav">
+        <div class="menu-item active">
+          <ion-icon name="grid-outline"></ion-icon>
+          <span>Dashboard</span>
+        </div>
+        <div class="menu-item" routerLink="/assets">
+          <ion-icon name="cube-outline"></ion-icon>
+          <span>Assets</span>
+        </div>
+        <div class="menu-item" routerLink="/companies">
+          <ion-icon name="business-outline"></ion-icon>
+          <span>Companies</span>
+        </div>
+        <div class="menu-item" routerLink="/factories">
+          <ion-icon name="construct-outline"></ion-icon>
+          <span>Factories</span>
+        </div>
+        <div class="menu-item" routerLink="/departments">
+          <ion-icon name="people-outline"></ion-icon>
+          <span>Departments</span>
+        </div>
+        <div class="menu-item" routerLink="/locations">
+          <ion-icon name="location-outline"></ion-icon>
+          <span>Locations</span>
+        </div>
+        <div class="menu-item" routerLink="/categories">
+          <ion-icon name="folder-outline"></ion-icon>
+          <span>Categories</span>
+        </div>
+      </nav>
+
+      <!-- LOGOUT -->
+      <div class="logout-container">
+        <div class="menu-item logout" (click)="logout()">
+          <ion-icon name="log-out-outline"></ion-icon>
+          <span>Logout</span>
+        </div>
+      </div>
+    </div>
+    <!-- ========== END SIDEBAR ========== -->
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <div class="main">
+
+      <!-- HEADER -->
+      <div class="page-header">
+        <h2>Dashboard</h2>
+        <p>Asset Management Control Panel</p>
+      </div>
+
+      <!-- ========== STAT CARD GRID ========== -->
+      <div class="stat-grid">
+
+        <!-- ASSETS -->
+        <div class="stat-card blue"
+             [routerLink]="['/assets']"
+             [queryParams]="{ view: true }">
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <div class="card-info">
+              <p class="card-label">Total Assets</p>
+              <h3 class="card-value">{{ totalAssets }}</h3>
+              <div class="card-trend">
+                <ion-icon name="trending-up-outline"></ion-icon>
+                <span>Active</span>
+              </div>
+            </div>
+            <div class="card-icon">
+              <ion-icon name="cube-outline"></ion-icon>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMPANIES -->
+        <div class="stat-card green"
+             [routerLink]="['/companies']"
+             [queryParams]="{ view: true }">
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <div class="card-info">
+              <p class="card-label">Companies</p>
+              <h3 class="card-value">{{ totalCompanies }}</h3>
+              <div class="card-trend">
+                <ion-icon name="trending-up-outline"></ion-icon>
+                <span>Active</span>
+              </div>
+            </div>
+            <div class="card-icon">
+              <ion-icon name="business-outline"></ion-icon>
+            </div>
+          </div>
+        </div>
+
+        <!-- FACTORIES -->
+        <div class="stat-card orange"
+             [routerLink]="['/factories']"
+             [queryParams]="{ view: true }">
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <div class="card-info">
+              <p class="card-label">Factories</p>
+              <h3 class="card-value">{{ totalFactories }}</h3>
+              <div class="card-trend">
+                <ion-icon name="trending-up-outline"></ion-icon>
+                <span>Active</span>
+              </div>
+            </div>
+            <div class="card-icon">
+              <ion-icon name="construct-outline"></ion-icon>
+            </div>
+          </div>
+        </div>
+
+        <!-- DEPARTMENTS -->
+        <div class="stat-card red"
+             [routerLink]="['/departments']"
+             [queryParams]="{ view: true }">
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <div class="card-info">
+              <p class="card-label">Departments</p>
+              <h3 class="card-value">{{ totalDepartments }}</h3>
+              <div class="card-trend">
+                <ion-icon name="trending-up-outline"></ion-icon>
+                <span>Active</span>
+              </div>
+            </div>
+            <div class="card-icon">
+              <ion-icon name="people-outline"></ion-icon>
+            </div>
+          </div>
+        </div>
+
+        <!-- LOCATIONS -->
+        <div class="stat-card purple"
+             [routerLink]="['/locations']"
+             [queryParams]="{ view: true }">
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <div class="card-info">
+              <p class="card-label">Locations</p>
+              <h3 class="card-value">{{ totalLocations }}</h3>
+              <div class="card-trend">
+                <ion-icon name="trending-up-outline"></ion-icon>
+                <span>Active</span>
+              </div>
+            </div>
+            <div class="card-icon">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+          </div>
+        </div>
+
+        <!-- CATEGORIES -->
+        <div class="stat-card yellow"
+             [routerLink]="['/categories']"
+             [queryParams]="{ view: true }">
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <div class="card-info">
+              <p class="card-label">Categories</p>
+              <h3 class="card-value">{{ totalCategories }}</h3>
+              <div class="card-trend">
+                <ion-icon name="trending-up-outline"></ion-icon>
+                <span>Active</span>
+              </div>
+            </div>
+            <div class="card-icon">
+              <ion-icon name="folder-outline"></ion-icon>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- ========== END STAT GRID ========== -->
+
+      <!-- ========== ASSET LOG PANEL ========== -->
+      <div class="asset-log-panel">
+        <div class="panel-header">
+          <div class="header-info">
+            <h4>Asset Log</h4>
+            <p>Riwayat pergerakan dan aktivitas aset</p>
+          </div>
+          <button class="view-all-btn"
+                  [routerLink]="['/asset-log']"
+                  [queryParams]="{ view: true }">
+            View All
+          </button>
+        </div>
+
+        <div class="activities-list">
+          <div class="activity-item" *ngFor="let activity of recentActivities">
+            <div class="activity-icon" [class]="activity.type">
+              <ion-icon name="pulse-outline"></ion-icon>
+            </div>
+            <div class="activity-content">
+              <p class="activity-action">{{ activity.action }}</p>
+              <p class="activity-time">{{ activity.time }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ========== END ASSET LOG ========== -->
+
+    </div>
+    <!-- ========== END MAIN ========== -->
+
+  </div>
+</ion-content>

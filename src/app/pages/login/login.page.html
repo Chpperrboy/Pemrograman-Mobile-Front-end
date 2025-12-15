@@ -1,0 +1,63 @@
+<ion-content fullscreen class="login-bg">
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="logo">
+        <span>ZLS</span>
+      </div>
+      <h1>Selamat Datang!</h1>
+      <p>Silakan login untuk melanjutkan dan mengelola aset Anda dengan mudah</p>
+    </div>
+
+    <!-- FORM LOGIN -->
+    <div class="form-card">
+
+      <h2>Masuk ke Akun</h2>
+      <p>Masukkan kredensial Anda untuk melanjutkan</p>
+
+      <div class="input-group">
+        <label>Username</label>
+        <ion-input
+          type="text"
+          placeholder="admin"
+          [(ngModel)]="username"
+          class="custom-input"
+          required>
+        </ion-input>
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <ion-input
+          type="password"
+          placeholder="Masukkan password Anda"
+          [(ngModel)]="password"
+          class="custom-input"
+          required>
+        </ion-input>
+      </div>
+      <!-- 
+
+      <div class="forgot-password">
+        <a>Lupa Password?</a>
+      </div>
+      -->
+      <ion-button expand="block" class="login-btn" (click)="login()">
+        Login 
+      </ion-button>
+
+      <div class="register-link">
+        <p>
+          Belum punya akun? <a (click)="goToRegister()">Daftar Sekarang</a>
+        </p>
+      </div>
+
+    </div>
+
+    <p class="footer">©️ 2025 Asset Management System</p>
+
+  </div>
+
+</ion-content>

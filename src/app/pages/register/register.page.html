@@ -1,0 +1,91 @@
+<ion-content fullscreen class="register-bg">
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="logo">
+        <span>ZLS</span>
+      </div>
+      <h1>Bergabung Bersama Kami!</h1>
+      <p>Buat akun baru dan nikmati semua fitur untuk mengelola aset Anda dengan lebih baik</p>
+    </div>
+
+    <!-- FORM REGISTER -->
+    <div class="form-card">
+
+      <h2>Buat Akun Baru</h2>
+      <p>Daftar untuk mulai mengelola aset Anda</p>
+
+      <div class="input-group">
+        <label>Nama Lengkap</label>
+        <ion-input
+          type="text"
+          placeholder="Masukkan nama lengkap"
+          [(ngModel)]="fullName"
+          class="custom-input"
+          required>
+        </ion-input>
+      </div>
+
+      <div class="input-group">
+        <label>Username</label>
+        <ion-input
+          type="text"
+          placeholder="Pilih username unik"
+          [(ngModel)]="username"
+          class="custom-input"
+          required>
+        </ion-input>
+      </div>
+
+      <div class="input-group">
+        <label>Email</label>
+        <ion-input
+          type="email"
+          placeholder="Masukkan email Anda"
+          [(ngModel)]="email"
+          class="custom-input"
+          required>
+        </ion-input>
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <ion-input
+          type="password"
+          placeholder="Buat password yang kuat"
+          [(ngModel)]="password"
+          class="custom-input"
+          required>
+        </ion-input>
+      </div>
+
+      <div class="input-group">
+        <label>Konfirmasi Password</label>
+        <ion-input
+          type="password"
+          placeholder="Ulangi password Anda"
+          [(ngModel)]="confirmPassword"
+          class="custom-input"
+          required>
+        </ion-input>
+      </div>
+
+      <ion-button expand="block" class="register-btn" (click)="register()">
+        Daftar Sekarang
+      </ion-button>
+
+      <div class="login-link">
+        <p>
+          Sudah punya akun? <a (click)="goToLogin()">Login</a>
+        </p>
+      </div>
+
+    </div>
+
+    <p class="footer">©️ 2025 Asset Management System</p>
+
+  </div>
+
+</ion-content>

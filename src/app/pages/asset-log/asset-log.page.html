@@ -1,0 +1,252 @@
+<ion-content>
+  <div class="log-wrapper">
+    
+    <!-- HEADER -->
+    <div class="log-header">
+      <div class="header-with-back">
+        <button class="btn-back" (click)="goToDashboard()">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          <span>Kembali</span>
+        </button>
+        <div class="header-text">
+          <h1>Asset Activity Log</h1>
+          <p>Riwayat lengkap pergerakan dan aktivitas aset</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- STATS GRID -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon blue">
+          <ion-icon name="document-text-outline"></ion-icon>
+        </div>
+        <div class="stat-content">
+          <p class="stat-label">Total Logs</p>
+          <h3 class="stat-number">{{ logs.length }}</h3>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon green">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+        </div>
+        <div class="stat-content">
+          <p class="stat-label">Good Condition</p>
+          <h3 class="stat-number">{{ getConditionCount('Baik') }}</h3>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon orange">
+          <ion-icon name="warning-outline"></ion-icon>
+        </div>
+        <div class="stat-content">
+          <p class="stat-label">Need Attention</p>
+          <h3 class="stat-number">{{ getConditionCount('Rusak Ringan') }}</h3>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon red">
+          <ion-icon name="close-circle-outline"></ion-icon>
+        </div>
+        <div class="stat-content">
+          <p class="stat-label">Critical/Lost</p>
+          <h3 class="stat-number">{{ getCriticalCount() }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+      <div class="search-box">
+        <ion-icon name="search-outline"></ion-icon>
+        <input type="text" 
+               placeholder="Cari asset..." 
+               [(ngModel)]="searchTerm"
+               (input)="applyFilters()">
+      </div>
+
+      <select class="filter-select" 
+              [(ngModel)]="filterCondition" 
+              (change)="applyFilters()">
+        <option value="">Semua Kondisi</option>
+        <option value="Baik">Baik</option>
+        <option value="Rusak">Rusak</option>
+        <option value="Cukup">Cukup</option>
+        <option value="Usang">Usang</option>
+      </select>
+
+      <select class="filter-select" 
+              [(ngModel)]="filterAsset" 
+              (change)="applyFilters()">
+        <option value="">Semua Asset</option>
+        <option *ngFor="let asset of uniqueAssets" [value]="asset.id">
+          {{ asset.code }}
+        </option>
+      </select>
+<!-- 
+      <button class="btn-add" (click)="openAddModal()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        Tambah Log
+      </button>
+-->
+    </div>
+
+    <!-- LOGS CONTAINER -->
+    <div class="logs-container">
+      
+      <!-- EMPTY STATE -->
+      <div class="empty-state" *ngIf="filteredLogs.length === 0">
+        <ion-icon name="file-tray-outline"></ion-icon>
+        <h3>Tidak Ada Log</h3>
+        <p>Belum ada aktivitas yang tercatat</p>
+      </div>
+
+      <!-- TIMELINE -->
+      <div class="timeline" *ngIf="filteredLogs.length > 0">
+        <div class="timeline-item" *ngFor="let log of filteredLogs; let i = index">
+          
+          <div class="timeline-line-wrapper">
+            <div class="timeline-dot" [ngClass]="getConditionClass(log.condition)"></div>
+            <div class="timeline-line" *ngIf="i < filteredLogs.length - 1"></div>
+          </div>
+
+          <div class="log-card">
+            <div class="log-header-inline">
+              <div class="log-badge-group">
+                <span class="asset-badge">{{ log.asset_code || 'Asset #' + log.asset_id }}</span>
+                <span class="condition-badge" [ngClass]="getConditionClass(log.condition)">
+                  {{ log.condition }}
+                </span>
+              </div>
+              <span class="log-date">{{ log.created_at | date:'dd MMM yyyy, HH:mm' }}</span>
+            </div>
+
+            <div class="log-details">
+              <div class="detail-col">
+                <span class="detail-label">ASSET NAME</span>
+                <span class="detail-value">{{ log.asset_name || 'N/A' }}</span>
+              </div>
+
+              <div class="detail-col">
+                <span class="detail-label">LOCATION</span>
+                <span class="detail-value">{{ log.location_name || 'N/A' }}</span>
+              </div>
+
+              <div class="detail-col">
+                <span class="detail-label">CREATED BY</span>
+                <span class="detail-value">{{ log.created_by_name || 'System' }}</span>
+              </div>
+            </div>
+
+            <!-- Photo Preview -->
+            <div class="photo-section" *ngIf="log.photo">
+              <img [src]="log.photo" alt="Asset Photo" (click)="viewPhoto(log.photo)">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ========================================
+       MODAL TAMBAH LOG
+  ========================================= -->
+  <div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+<!--      
+       Modal Header 
+      <div class="modal-header">
+        <h2>Tambah Activity Log</h2>
+        <button class="btn-close" (click)="closeModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+ -->
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <form (ngSubmit)="submitLog()">
+          
+          <!-- Asset Selection -->
+          <div class="form-group">
+            <label>Asset <span class="required">*</span></label>
+            <select [(ngModel)]="newLog.asset_id" name="asset_id" required>
+              <option value="">Pilih Asset</option>
+              <option *ngFor="let asset of allAssets" [value]="asset.id">
+                {{ asset.asset_code }} - {{ asset.asset_name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Location Selection -->
+          <div class="form-group">
+            <label>Lokasi <span class="required">*</span></label>
+            <select [(ngModel)]="newLog.location_id" name="location_id" required>
+              <option value="">Pilih Lokasi</option>
+              <option *ngFor="let location of allLocations" [value]="location.id">
+                {{ location.location_name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Condition Selection -->
+          <div class="form-group">
+            <label>Kondisi <span class="required">*</span></label>
+            <select [(ngModel)]="newLog.condition" name="condition" required>
+              <option value="">Pilih Kondisi</option>
+              <option value="Baik">Baik</option>
+              <option value="Cukup ">Rusak</option>
+              <option value="Usang">Usang</option>
+            </select>
+          </div>
+
+          <!-- Photo Upload -->
+          <div class="form-group">
+            <label>Foto (Optional)</label>
+            <input 
+              type="file" 
+              accept="image/*" 
+              (change)="onFileSelect($event)"
+              class="file-input">
+            <div class="file-preview" *ngIf="previewImage">
+              <img [src]="previewImage" alt="Preview">
+              <button type="button" class="btn-remove-image" (click)="removeImage()">
+                <ion-icon name="close-circle"></ion-icon>
+              </button>
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div class="form-group">
+            <label>Catatan (Optional)</label>
+            <textarea 
+              [(ngModel)]="newLog.notes" 
+              name="notes"
+              rows="3" 
+              placeholder="Tambahkan catatan..."></textarea>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" (click)="closeModal()">
+              Batal
+            </button>
+            <button type="submit" class="btn-submit" [disabled]="isSubmitting">
+              <ion-icon name="checkmark-circle-outline" *ngIf="!isSubmitting"></ion-icon>
+              <ion-icon name="hourglass-outline" *ngIf="isSubmitting" class="spinning"></ion-icon>
+              {{ isSubmitting ? 'Menyimpan...' : 'Simpan Log' }}
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+</ion-content>

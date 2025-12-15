@@ -1,0 +1,192 @@
+.login-bg {
+  --background: linear-gradient(135deg, #6e45e2, #88d3ce);
+}
+
+.container {
+  padding: 20px;
+  max-width: 450px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+
+  .logo {
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+    span {
+      font-size: 36px;
+      font-weight: bold;
+      color: #6e45e2;
+    }
+  }
+
+  h1 {
+    color: white;
+    font-size: 28px;
+    margin: 0 0 5px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  p {
+    color: rgba(255,255,255,0.9);
+    font-size: 14px;
+    margin: 0;
+    line-height: 1.5;
+    text-align: center;
+  }
+}
+
+.form-card {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 400px;
+  text-align: center; /* 👈 Pusatkan seluruh form */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 👈 Pusatkan semua child elemen secara horizontal */
+
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin: 0 0 5px;
+    text-align: center;
+  }
+
+  p {
+    color: #666;
+    font-size: 14px;
+    margin: 0 0 20px;
+    text-align: center;
+  }
+}
+
+.input-group {
+  margin-bottom: 20px;
+  width: 60%; /* 👈 Mengisi lebar form-card */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 👈 Biarkan label & input rata kiri */
+
+  label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+    text-align: left; /* 👈 Label tetap kiri */
+  }
+
+  .custom-input {
+    --padding-start: 15px;
+    --padding-end: 15px;
+    --border-radius: 10px;
+    --background: #f8f9fa;
+    --border-color: #ddd;
+    --box-shadow: none;
+    --placeholder-color: #999;
+    --color: #333;
+    --focused-border-color: #6e45e2;
+    --focused-box-shadow: 0 0 0 2px rgba(110, 69, 226, 0.2);
+
+    ion-input {
+      font-size: 16px;
+      width: 100%; /* 👈 Lebar penuh */
+      min-width: 100%; /* 👈 Pastikan tidak lebih sempit */
+    }
+
+    &::part(native) {
+      width: 100% !important; /* 👈 PAKSA lebar penuh */
+      text-align: left;
+      padding: 10px 15px; /* 👈 Padding internal simetris */
+      box-sizing: border-box; /* 👈 Penting agar padding tidak menambah lebar */
+    }
+  }
+}
+
+.forgot-password {
+  text-align: right;
+  margin-bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+  a {
+    color: #6e45e2;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: color 0.2s;
+
+    &:hover {
+      color: #5a3bbd;
+      text-decoration: underline;
+    }
+  }
+}
+
+.login-btn {
+  --background: linear-gradient(90deg, #6e45e2, #88d3ce);
+  --border-radius: 15px;
+  --box-shadow: 0 4px 15px rgba(110, 69, 226, 0.3);
+  --height: 50px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-align: center;
+
+  &:hover {
+    --box-shadow: 0 6px 20px rgba(110, 69, 226, 0.4);
+    transform: translateY(-2px);
+  }
+}
+
+.register-link {
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+
+  p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+
+    a {
+      color: #6e45e2;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #5a3bbd;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.footer {
+  text-align: center;
+  color: rgba(255,255,255,0.6);
+  font-size: 12px;
+  margin-top: 30px;
+}

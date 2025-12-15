@@ -1,0 +1,151 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen [scrollY]="true">
+  
+  <!-- Header Section -->
+  <div class="page-header">
+    <div class="header-icon">📦</div>
+    <h1 class="header-title">{{ id ? 'Edit Asset' : 'Tambah Asset Baru' }}</h1>
+    <p class="header-subtitle">Lengkapi informasi asset dengan detail yang akurat</p>
+  </div>
+
+  <!-- Form Container -->
+  <div class="form-container">
+
+    <!-- Section: Informasi Dasar -->
+    <div class="section-title">Informasi Dasar</div>
+
+    <!-- Kode Asset -->
+    <div class="form-group">
+      <label class="form-label">Kode Asset <span class="required">*</span></label>
+      <input
+        type="text"
+        class="form-input"
+        [class.invalid]="isSubmitted && !asset.code"
+        [(ngModel)]="asset.code"
+        placeholder="Contoh: ASSET-001"
+      />
+      <span class="help-text">Kode unik untuk identifikasi asset</span>
+    </div>
+
+    <!-- Serial Number -->
+    <div class="form-group">
+      <label class="form-label">Serial Number</label>
+      <input
+        type="text"
+        class="form-input"
+        [(ngModel)]="asset.serial_number"
+        placeholder="Contoh: SN123456789"
+      />
+      <span class="help-text">Nomor seri dari manufaktur</span>
+    </div>
+
+    <!-- Nama Asset -->
+    <div class="form-group">
+      <label class="form-label">Nama Asset <span class="required">*</span></label>
+      <input
+        type="text"
+        class="form-input"
+        [class.invalid]="isSubmitted && !asset.name"
+        [(ngModel)]="asset.name"
+        placeholder="Contoh: Laptop Dell Inspiron"
+      />
+    </div>
+
+    <!-- Brand -->
+    <div class="form-group">
+      <label class="form-label">Brand</label>
+      <input
+        type="text"
+        class="form-input"
+        [(ngModel)]="asset.brand_name"
+        placeholder="Contoh: Dell, HP, Apple"
+      />
+    </div>
+
+    <!-- Section: Informasi Pembelian -->
+    <div class="section-title">Informasi Pembelian</div>
+
+    <!-- Tanggal Pembelian -->
+    <div class="form-group">
+      <label class="form-label">Tgl Pembelian</label>
+      <input
+        type="date"
+        class="form-input"
+        [(ngModel)]="purchaseDateFormatted"
+        (ngModelChange)="onDateChange($event)"
+      />
+    </div>
+
+    <!-- Harga -->
+    <div class="form-group">
+      <label class="form-label">Harga (IDR) <span class="required">*</span></label>
+      <input
+        type="number"
+        class="form-input"
+        [class.invalid]="isSubmitted && !asset.price"
+        [(ngModel)]="asset.price"
+        placeholder="5000000"
+        min="0"
+      />
+      <span class="help-text">Masukkan harga tanpa titik atau koma</span>
+    </div>
+
+    <!-- Kondisi Asset -->
+    <div class="form-group">
+      <label class="form-label">Kondisi Asset</label>
+      <select
+        class="form-select"
+        [(ngModel)]="asset.current_condition"
+      >
+        <option value="">Pilih kondisi</option>
+        <option value="baik">Baik</option>
+        <option value="rusak">Rusak</option>
+        <option value="cukup">cukup</option>
+        <option value="usang">usang</option>
+      </select>
+    </div>
+
+    <!-- Foto Asset -->
+    <div class="form-group">
+      <label class="form-label">Foto Asset (Opsional)</label>
+      <input
+        type="file"
+        class="form-file"
+        id="file-input"
+        accept="image/*"
+        (change)="onFileSelected($event)"
+      />
+      <span class="help-text">Format: JPG, PNG, maksimal 5MB</span>
+    </div>
+
+    <!-- Tombol Simpan -->
+    <div class="button-group">
+      <button
+        class="btn btn-primary"
+        (click)="save()"
+        [disabled]="saving"
+      >
+        <ion-spinner *ngIf="saving" name="crescent"></ion-spinner>
+        <span *ngIf="!saving">{{ id ? 'Update Asset' : 'Simpan Asset' }}</span>
+      </button>
+
+      <button
+        class="btn btn-secondary"
+        (click)="goBack()"
+      >
+        Batal
+      </button>
+    </div>
+
+  </div>
+
+</ion-content>

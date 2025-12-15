@@ -1,0 +1,88 @@
+<ion-content class="main-content">
+  <div class="header-section">
+    <div class="header-buttons">
+      <ion-button (click)="goBack()" fill="outline" class="dashboard-btn">
+        <ion-icon name="home-outline" slot="start"></ion-icon>
+        Dashboard
+      </ion-button>
+      <ion-button (click)="goAdd()" fill="outline" class="add-btn">
+        <ion-icon name="add" slot="start"></ion-icon>
+        Tambah Category
+      </ion-button>
+    </div>
+    <h1 class="page-title">Asset Categories</h1>
+  </div>
+
+  <div class="content-container">
+
+    <!-- Search & Filter Section -->
+    <div class="search-filter-section">
+      <div class="search-box">
+        <ion-icon name="search-outline"></ion-icon>
+        <input type="text" placeholder="Cari kategori berdasarkan nama atau kode..." [(ngModel)]="searchText" (input)="onSearch()">
+      </div>
+
+      <label class="view-only-checkbox" *ngIf="isViewOnly">
+        <input type="checkbox" disabled checked>
+        <span>View Only</span>
+      </label>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="filteredCategories.length === 0" class="empty-state">
+      <ion-icon name="folder-open-outline"></ion-icon>
+      <h2>Tidak ada kategori ditemukan</h2>
+      <p *ngIf="searchText">Coba kata kunci lain atau filter berbeda</p>
+      <p *ngIf="!searchText && !isViewOnly">Mulai tambahkan kategori pertama Anda</p>
+      <ion-button (click)="goAdd()" color="primary" *ngIf="!isViewOnly && !searchText">
+        <ion-icon name="add" slot="start"></ion-icon>
+        Tambah Category
+      </ion-button>
+    </div>
+
+    <!-- Category List -->
+    <div class="category-list" *ngIf="filteredCategories.length > 0">
+
+      <div class="category-item" *ngFor="let item of filteredCategories">
+
+        <!-- Icon -->
+        <div class="item-icon">
+          <ion-icon name="layers-outline"></ion-icon>
+        </div>
+
+        <!-- Content -->
+        <div class="item-content">
+
+          <!-- Title -->
+          <div class="item-title">{{ item.name }}</div>
+
+          <!-- Code -->
+          <div class="item-code">
+            Kode: {{ item.code || 'Tidak ada kode' }}
+          </div>
+
+          <!-- Category ID -->
+          <div class="item-category-id">
+            <span class="badge">Category ID: {{ item.id || 'Tidak ada' }}</span>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="item-actions">
+            <button class="action-btn edit-btn" (click)="goEdit(item.id)" *ngIf="!isViewOnly">
+              <ion-icon name="create-outline"></ion-icon>
+              Edit
+            </button>
+            <button class="action-btn delete-btn" (click)="confirmDelete(item)" *ngIf="!isViewOnly">
+              <ion-icon name="trash-outline"></ion-icon>
+              Hapus
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</ion-content>

@@ -1,0 +1,88 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen [scrollY]="true">
+
+  <!-- Header Section -->
+  <div class="page-header">
+    <div class="header-icon">📍</div>
+    <h1 class="header-title">{{ id ? 'Edit Location' : 'Tambah Location Baru' }}</h1>
+    <p class="header-subtitle">Lengkapi informasi location dengan detail yang akurat</p>
+  </div>
+
+  <!-- Form Container -->
+  <div class="form-container">
+
+    <!-- Section: Informasi Dasar -->
+    <div class="section-title">Informasi Dasar</div>
+
+    <!-- Number -->
+    <div class="form-group">
+      <label class="form-label">Number <span class="required">*</span></label>
+      <input
+        type="number"
+        class="form-input"
+        [class.invalid]="submitted && !location.number"
+        [(ngModel)]="location.number"
+        placeholder="Contoh: 1"
+        min="1"
+        [readonly]="id ? true : false"
+      />
+      <span *ngIf="submitted && !location.number" class="help-text">Number wajib diisi.</span>
+    </div>
+
+    <!-- Kode Location -->
+    <div class="form-group">
+      <label class="form-label">Kode Location <span class="required">*</span></label>
+      <input
+        type="text"
+        class="form-input"
+        [class.invalid]="submitted && !location.code"
+        [(ngModel)]="location.code"
+        placeholder="Contoh: LOC-001"
+      />
+      <span *ngIf="submitted && !location.code" class="help-text">Kode location wajib diisi.</span>
+    </div>
+
+    <!-- Nama Location -->
+    <div class="form-group">
+      <label class="form-label">Nama Location <span class="required">*</span></label>
+      <input
+        type="text"
+        class="form-input"
+        [class.invalid]="submitted && !location.name"
+        [(ngModel)]="location.name"
+        placeholder="Contoh: Gudang A, Ruang Server"
+      />
+      <span *ngIf="submitted && !location.name" class="help-text">Nama location wajib diisi.</span>
+    </div>
+
+    <!-- Tombol Simpan -->
+    <div class="button-group">
+      <button
+        class="btn btn-primary"
+        (click)="save()"
+        [disabled]="saving"
+      >
+        <ion-spinner *ngIf="saving" name="crescent"></ion-spinner>
+        <span *ngIf="!saving">{{ id ? 'Update Location' : 'Simpan Location' }}</span>
+      </button>
+
+      <button
+        class="btn btn-secondary"
+        (click)="goBack()"
+      >
+        Batal
+      </button>
+    </div>
+
+  </div>
+
+</ion-content>
